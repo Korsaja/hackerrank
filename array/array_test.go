@@ -154,7 +154,7 @@ func TestArrayManipulation(t *testing.T) {
 		{n: 5, out: 200, queries: [][]int32{{1, 2, 100}, {2, 5, 100}, {3, 4, 100}}},
 	}
 
-	for i, test := range testCases[:1] {
+	for i, test := range testCases {
 		name := fmt.Sprintf("test [%d]", i+1)
 		t.Run(name, func(t *testing.T) {
 			res := arrayManipulation(test.n, test.queries)
@@ -171,7 +171,89 @@ func TestArrayManipulation(t *testing.T) {
 			t.Errorf("time limit exceeded test failed ex: %+v got: %+v\n", ex, res)
 		}
 	})
+}
 
+func TestRotLeft(t *testing.T) {
+	var testCases = []struct {
+		a, out []int32
+		d      int32
+	}{
+		{a: []int32{1, 2, 3, 4, 5}, out: []int32{5, 1, 2, 3, 4}, d: 4},
+		{a: []int32{1, 2, 3, 4, 5}, out: []int32{3, 4, 5, 1, 2}, d: 2},
+	}
+
+	for i, test := range testCases {
+		name := fmt.Sprintf("test [%d]", i+1)
+		t.Run(name, func(t *testing.T) {
+			res := rotLeft(test.a, test.d)
+			if !reflect.DeepEqual(res, test.out) {
+				t.Errorf("%s ex: %+v got: %+v\n", name, test.out, res)
+			}
+		})
+	}
+}
+func TestMinimumBribes(t *testing.T) {
+	var testCases = []struct {
+		q   []int32
+		out interface{}
+	}{
+		{
+			q:   []int32{1, 2, 3, 5, 4, 6, 7, 8},
+			out: 1,
+		},
+		{
+			q:   []int32{4, 1, 2, 3},
+			out: "Too chaotic",
+		},
+		{
+			q:   []int32{2, 1, 5, 3, 4},
+			out: 3,
+		},
+		{
+			q:   []int32{2, 5, 1, 3, 4},
+			out: "Too chaotic",
+		},
+	}
+
+	for i, test := range testCases {
+		name := fmt.Sprintf("test [%d]", i+1)
+		t.Run(name, func(t *testing.T) {
+			res := minimumBribes(test.q)
+			if !reflect.DeepEqual(res, test.out) {
+				t.Errorf("%s ex: %+v got: %+v\n", name, test.out, res)
+			}
+		})
+	}
+}
+
+func TestMinimumSwap(t *testing.T) {
+	var testCases = []struct {
+		arr []int32
+		out int32
+	}{
+		{
+			arr: []int32{7, 1, 3, 2, 4, 5, 6},
+			out: 5,
+		},
+		{
+			arr: []int32{4, 3, 1, 2},
+			out: 3,
+		},
+		{
+			arr: []int32{1, 3, 5, 2, 4, 6, 7},
+			out: 3,
+		},
+	}
+
+	for i, test := range testCases {
+		name := fmt.Sprintf("test [%d]", i+1)
+		t.Run(name, func(t *testing.T) {
+			res := minimumSwaps(test.arr)
+			if !reflect.DeepEqual(res, test.out) {
+				t.Errorf("%s ex: %+v got: %+v\n", name, test.out, res)
+			}
+		})
+	}
 }
 
 func mustBuildQueriesFromFile(t *testing.T) (int32, [][]int32) {

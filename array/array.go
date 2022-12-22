@@ -89,3 +89,42 @@ func arrayManipulation(n int32, queries [][]int32) int64 {
 
 	return maxSum
 }
+
+// easy
+func rotLeft(a []int32, d int32) []int32 {
+	if d == int32(len(a)) {
+		return a
+	}
+
+	out := make([]int32, len(a))
+	copy(out[len(a[d:]):], a[:d])
+	copy(out, a[d:])
+	return out
+}
+
+func minimumBribes(q []int32) interface{} {
+	var str = "Too chaotic"
+	var res int
+	for i := int32(0); i < int32(len(q)); i++ {
+		if q[i]-2 > i+1 {
+			return str
+		}
+		for j := i - 1; j >= q[i]-2 && j >= 0; j-- {
+			if q[j] > q[i] {
+				res++
+			}
+		}
+	}
+	return res
+}
+
+func minimumSwaps(arr []int32) int32 {
+	var n int32
+	for i := int32(0); i < int32(len(arr)); i++ {
+		for arr[i] != i+1 {
+			arr[arr[i]-1], arr[i] = arr[i], arr[arr[i]-1]
+			n++
+		}
+	}
+	return n
+}
